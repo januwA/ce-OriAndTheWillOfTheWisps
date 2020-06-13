@@ -1,0 +1,1660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>50</ID>
+      <Description>"锁 hp"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(hp_INJECT,GameAssembly.dll,89 43 2C C6 43 28 00)
+alloc(newmem,$1000,"GameAssembly.dll"+F141D8)
+
+alloc(floatHp, $4)
+registersymbol(floatHp)
+floatHp:
+ dd 0
+
+label(code)
+label(return)
+
+newmem:
+  mov [floatHp],rbx
+  mov eax,(float)9999.0
+  // mov [rbx+34],eax // max hp
+
+code:
+  mov [rbx+2C],eax
+  mov byte ptr [rbx+28],00
+  jmp return
+
+hp_INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(hp_INJECT)
+
+[DISABLE]
+
+hp_INJECT:
+  db 89 43 2C C6 43 28 00
+unregistersymbol(floatHp)
+dealloc(floatHp)
+unregistersymbol(hp_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+F141D8
+
+"GameAssembly.dll"+F141BB: 48 85 C9                    -  test rcx,rcx
+"GameAssembly.dll"+F141BE: 74 2A                       -  je GameAssembly.dll+F141EA
+"GameAssembly.dll"+F141C0: 33 D2                       -  xor edx,edx
+"GameAssembly.dll"+F141C2: E8 79 AD 51 00              -  call GameAssembly.dll+142EF40
+"GameAssembly.dll"+F141C7: 48 85 C0                    -  test rax,rax
+"GameAssembly.dll"+F141CA: 74 30                       -  je GameAssembly.dll+F141FC
+"GameAssembly.dll"+F141CC: 48 8B 40 28                 -  mov rax,[rax+28]
+"GameAssembly.dll"+F141D0: 48 85 C0                    -  test rax,rax
+"GameAssembly.dll"+F141D3: 74 21                       -  je GameAssembly.dll+F141F6
+"GameAssembly.dll"+F141D5: 8B 40 10                    -  mov eax,[rax+10]
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+F141D8: 89 43 2C                    -  mov [rbx+2C],eax
+"GameAssembly.dll"+F141DB: C6 43 28 00                 -  mov byte ptr [rbx+28],00
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+F141DF: F3 0F 10 43 2C              -  movss xmm0,[rbx+2C]
+"GameAssembly.dll"+F141E4: 48 83 C4 40                 -  add rsp,40
+"GameAssembly.dll"+F141E8: 5B                          -  pop rbx
+"GameAssembly.dll"+F141E9: C3                          -  ret 
+"GameAssembly.dll"+F141EA: E8 A1 9E 35 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+F141EF: CC                          -  int 3 
+"GameAssembly.dll"+F141F0: E8 9B 9E 35 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+F141F5: CC                          -  int 3 
+"GameAssembly.dll"+F141F6: E8 95 9E 35 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+F141FB: CC                          -  int 3 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>51</ID>
+          <Description>"hp"</Description>
+          <LastState Value="9999" RealAddress="1AF17F00B2C"/>
+          <VariableType>Float</VariableType>
+          <Address>[floatHp]+2c</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>76</ID>
+      <Description>"锁 mp"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(mp_INJECT,GameAssembly.dll,F3 0F 11 73 18 33)
+alloc(newmem,$1000,"GameAssembly.dll"+96EA4D)
+
+alloc(pMp, $8)
+registersymbol(pMp)
+pMp:
+ dd 0
+
+
+label(code)
+label(return)
+
+newmem:
+  mov [pMp],rbx
+  movd xmm6,[rbx+18+4]
+
+code:
+  movss [rbx+18],xmm6
+  jmp return
+
+mp_INJECT:
+  jmp newmem
+return:
+registersymbol(mp_INJECT)
+
+[DISABLE]
+
+mp_INJECT:
+  db F3 0F 11 73 18
+unregistersymbol(pMp)
+dealloc(pMp)
+unregistersymbol(mp_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+96EA4D
+
+"GameAssembly.dll"+96EA33: 0F 57 C9                    -  xorps xmm1,xmm1
+"GameAssembly.dll"+96EA36: 0F 2F CE                    -  comiss xmm1,xmm6
+"GameAssembly.dll"+96EA39: 77 0A                       -  ja GameAssembly.dll+96EA45
+"GameAssembly.dll"+96EA3B: 0F 2F F7                    -  comiss xmm6,xmm7
+"GameAssembly.dll"+96EA3E: 76 08                       -  jna GameAssembly.dll+96EA48
+"GameAssembly.dll"+96EA40: 0F 28 F7                    -  movaps xmm6,xmm7
+"GameAssembly.dll"+96EA43: EB 03                       -  jmp GameAssembly.dll+96EA48
+"GameAssembly.dll"+96EA45: 0F 57 F6                    -  xorps xmm6,xmm6
+"GameAssembly.dll"+96EA48: 48 85 DB                    -  test rbx,rbx
+"GameAssembly.dll"+96EA4B: 74 34                       -  je GameAssembly.dll+96EA81
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+96EA4D: F3 0F 11 73 18              -  movss [rbx+18],xmm6
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+96EA52: 33 D2                       -  xor edx,edx
+"GameAssembly.dll"+96EA54: 48 8B CB                    -  mov rcx,rbx
+"GameAssembly.dll"+96EA57: E8 74 C7 AC 00              -  call GameAssembly.dll+143B1D0
+"GameAssembly.dll"+96EA5C: C6 47 30 01                 -  mov byte ptr [rdi+30],01
+"GameAssembly.dll"+96EA60: 48 8B 5C 24 70              -  mov rbx,[rsp+70]
+"GameAssembly.dll"+96EA65: 0F 28 74 24 50              -  movaps xmm6,[rsp+50]
+"GameAssembly.dll"+96EA6A: 0F 28 7C 24 40              -  movaps xmm7,[rsp+40]
+"GameAssembly.dll"+96EA6F: 48 83 C4 60                 -  add rsp,60
+"GameAssembly.dll"+96EA73: 5F                          -  pop rdi
+"GameAssembly.dll"+96EA74: C3                          -  ret 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>77</ID>
+          <Description>"mp"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[pMp]+18</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>78</ID>
+          <Description>"max map (能量核心)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[pMp]+18+4</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>66</ID>
+      <Description>"一刀秒"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : oriandthewillofthewisps-pc.exe
+  Version: 
+  Date   : 2020-06-12
+  Author : ajanuw
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(ms_INJECT,GameAssembly.dll,F3 0F 11 73 28 0F 28 74 24 40) // should be unique
+alloc(newmem,$1000,"GameAssembly.dll"+B612E0)
+
+label(code)
+label(return)
+
+newmem:
+  //push eax
+  //mov eax,(float)0
+  //movd xmm6,eax
+  //pop eax
+  movss xmm6,xmm15
+
+code:
+  movss [rbx+28],xmm6
+  jmp return
+
+ms_INJECT:
+  jmp newmem
+return:
+registersymbol(ms_INJECT)
+
+[DISABLE]
+
+ms_INJECT:
+  db F3 0F 11 73 28
+
+unregistersymbol(ms_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+B612E0
+
+"GameAssembly.dll"+B612BA: 74 1B                    -  je GameAssembly.dll+B612D7
+"GameAssembly.dll"+B612BC: F3 0F 10 4B 28           -  movss xmm1,[rbx+28]
+"GameAssembly.dll"+B612C1: 0F 2E CE                 -  ucomiss xmm1,xmm6
+"GameAssembly.dll"+B612C4: 7A 02                    -  jp GameAssembly.dll+B612C8
+"GameAssembly.dll"+B612C6: 74 0F                    -  je GameAssembly.dll+B612D7
+"GameAssembly.dll"+B612C8: 4C 8B 0D E1 C8 86 03     -  mov r9,[GameAssembly.dll+43CDBB0]
+"GameAssembly.dll"+B612CF: 0F 28 D6                 -  movaps xmm2,xmm6
+"GameAssembly.dll"+B612D2: E8 19 C6 88 01           -  call GameAssembly.dll+23ED8F0
+"GameAssembly.dll"+B612D7: 80 BB 98 00 00 00 00     -  cmp byte ptr [rbx+00000098],00
+"GameAssembly.dll"+B612DE: 75 05                    -  jne GameAssembly.dll+B612E5
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+B612E0: F3 0F 11 73 28           -  movss [rbx+28],xmm6
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+B612E5: 0F 28 74 24 40           -  movaps xmm6,[rsp+40]
+"GameAssembly.dll"+B612EA: 48 83 C4 50              -  add rsp,50
+"GameAssembly.dll"+B612EE: 5B                       -  pop rbx
+"GameAssembly.dll"+B612EF: C3                       -  ret 
+"GameAssembly.dll"+B612F0: 80 B9 98 00 00 00 00     -  cmp byte ptr [rcx+00000098],00
+"GameAssembly.dll"+B612F7: 75 05                    -  jne GameAssembly.dll+B612FE
+"GameAssembly.dll"+B612F9: F3 0F 11 49 28           -  movss [rcx+28],xmm1
+"GameAssembly.dll"+B612FE: C3                       -  ret 
+"GameAssembly.dll"+B612FF: CC                       -  int 3 
+"GameAssembly.dll"+B61300: 4C 8B DC                 -  mov r11,rsp
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>54</ID>
+      <Description>"99999 精灵之光"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  精灵之光
+}
+
+[ENABLE]
+
+aobscanmodule(jlzg_INJECT,GameAssembly.dll,8B 40 30 48 83 C4 48 C3 E8 CA) // should be unique
+alloc(newmem,$1000,"GameAssembly.dll"+901AB9)
+
+alloc(pJlzg, $16)
+registersymbol(pJlzg)
+
+pJlzg:
+  dq 0
+
+
+label(code)
+label(return)
+
+newmem:
+  mov [pJlzg],rax
+  mov [rax+30],#99999
+code:
+  mov eax,[rax+30]
+  add rsp,48
+  jmp return
+
+jlzg_INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(jlzg_INJECT)
+
+[DISABLE]
+
+jlzg_INJECT:
+  db 8B 40 30 48 83 C4 48
+unregistersymbol(pJlzg)
+dealloc(pJlzg)
+unregistersymbol(jlzg_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+901AB9
+
+"GameAssembly.dll"+901A9B: 48 8B 48 18                 -  mov rcx,[rax+18]
+"GameAssembly.dll"+901A9F: 48 85 C9                    -  test rcx,rcx
+"GameAssembly.dll"+901AA2: 74 1D                       -  je GameAssembly.dll+901AC1
+"GameAssembly.dll"+901AA4: 33 D2                       -  xor edx,edx
+"GameAssembly.dll"+901AA6: E8 95 D4 B2 00              -  call GameAssembly.dll+142EF40
+"GameAssembly.dll"+901AAB: 48 85 C0                    -  test rax,rax
+"GameAssembly.dll"+901AAE: 74 23                       -  je GameAssembly.dll+901AD3
+"GameAssembly.dll"+901AB0: 48 8B 40 18                 -  mov rax,[rax+18]
+"GameAssembly.dll"+901AB4: 48 85 C0                    -  test rax,rax
+"GameAssembly.dll"+901AB7: 74 14                       -  je GameAssembly.dll+901ACD
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+901AB9: 8B 40 30                    -  mov eax,[rax+30]
+"GameAssembly.dll"+901ABC: 48 83 C4 48                 -  add rsp,48
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+901AC0: C3                          -  ret 
+"GameAssembly.dll"+901AC1: E8 CA C5 96 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+901AC6: CC                          -  int 3 
+"GameAssembly.dll"+901AC7: E8 C4 C5 96 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+901ACC: CC                          -  int 3 
+"GameAssembly.dll"+901ACD: E8 BE C5 96 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+901AD2: CC                          -  int 3 
+"GameAssembly.dll"+901AD3: E8 B8 C5 96 FF              -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+901AD8: CC                          -  int 3 
+"GameAssembly.dll"+901AD9: CC                          -  int 3 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>55</ID>
+          <Description>"pJlzg"</Description>
+          <LastState Value="99999" RealAddress="1AF870C4210"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[pJlzg]+30</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>83</ID>
+      <Description>"锁氧气"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(YnaQI_INJECT,GameAssembly.dll,F3 0F 11 B3 64 03 00 00) // should be unique
+alloc(newmem,$1000,"GameAssembly.dll"+C93162)
+
+alloc(pYnaQI, $8)
+registersymbol(pYnaQI)
+pYnaQI:
+ dd 0
+
+label(code)
+label(return)
+
+// 潜水后触发
+newmem:
+  mov [pYnaQI],rbx
+  push eax
+  mov eax,(float)16.0
+  movd xmm6,eax
+  pop eax
+
+code:
+  movss [rbx+00000364],xmm6
+  jmp return
+
+YnaQI_INJECT:
+  jmp newmem
+  nop 3
+return:
+registersymbol(YnaQI_INJECT)
+
+[DISABLE]
+
+YnaQI_INJECT:
+  db F3 0F 11 B3 64 03 00 00
+unregistersymbol(pYnaQI)
+dealloc(pYnaQI)
+unregistersymbol(YnaQI_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+C93162
+
+"GameAssembly.dll"+C93133: E8 58 50 B9 FF           -  call GameAssembly.dll+828190
+"GameAssembly.dll"+C93138: 0F 28 F8                 -  movaps xmm7,xmm0
+"GameAssembly.dll"+C9313B: 48 8B 0D 0E 53 6F 03     -  mov rcx,[GameAssembly.dll+4388450]
+"GameAssembly.dll"+C93142: F6 81 27 01 00 00 02     -  test byte ptr [rcx+00000127],02
+"GameAssembly.dll"+C93149: 74 0E                    -  je GameAssembly.dll+C93159
+"GameAssembly.dll"+C9314B: 83 B9 D8 00 00 00 00     -  cmp dword ptr [rcx+000000D8],00
+"GameAssembly.dll"+C93152: 75 05                    -  jne GameAssembly.dll+C93159
+"GameAssembly.dll"+C93154: E8 A7 A9 5B FF           -  call GameAssembly.dll+24DB00
+"GameAssembly.dll"+C93159: F3 0F 5C F7              -  subss xmm6,xmm7
+"GameAssembly.dll"+C9315D: F3 41 0F 5F F0           -  maxss xmm6,xmm8
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+C93162: F3 0F 11 B3 64 03 00 00  -  movss [rbx+00000364],xmm6
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+C9316A: 41 0F 2E F0              -  ucomiss xmm6,xmm8
+"GameAssembly.dll"+C9316E: 0F 8A AF 03 00 00        -  jp GameAssembly.dll+C93523
+"GameAssembly.dll"+C93174: 0F 85 A9 03 00 00        -  jne GameAssembly.dll+C93523
+"GameAssembly.dll"+C9317A: 80 BB E8 00 00 00 00     -  cmp byte ptr [rbx+000000E8],00
+"GameAssembly.dll"+C93181: 0F 85 4D 01 00 00        -  jne GameAssembly.dll+C932D4
+"GameAssembly.dll"+C93187: F3 0F 10 83 48 03 00 00  -  movss xmm0,[rbx+00000348]
+"GameAssembly.dll"+C9318F: 0F 2F 83 F0 00 00 00     -  comiss xmm0,[rbx+000000F0]
+"GameAssembly.dll"+C93196: 0F 82 87 03 00 00        -  jb GameAssembly.dll+C93523
+"GameAssembly.dll"+C9319C: F3 0F 10 B3 EC 00 00 00  -  movss xmm6,[rbx+000000EC]
+"GameAssembly.dll"+C931A4: 48 8B 0D 45 01 6D 03     -  mov rcx,[GameAssembly.dll+43632F0]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>84</ID>
+          <Description>"氧气"</Description>
+          <LastState Value="16" RealAddress="1AF8509DDE4"/>
+          <VariableType>Float</VariableType>
+          <Address>[pYnaQI]+364</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"跳跃高度"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(jumpHeight_INJECT,GameAssembly.dll,F3 0F 11 B3 84 00 00 00 48 8B 5C)
+alloc(newmem,$1000,"GameAssembly.dll"+11262E1)
+
+label(floatJumpHeight)
+registersymbol(floatJumpHeight)
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  comiss xmm6,xmm15
+  je code
+  movd xmm6,[floatJumpHeight]
+  jmp code
+
+code:
+  popf
+
+  movss [rbx+00000084],xmm6
+  jmp return
+floatJumpHeight:
+  dd (float)20
+
+jumpHeight_INJECT:
+  jmp newmem
+  nop 3
+return:
+registersymbol(jumpHeight_INJECT)
+
+[DISABLE]
+
+jumpHeight_INJECT:
+  db F3 0F 11 B3 84 00 00 00
+unregistersymbol(floatJumpHeight)
+unregistersymbol(jumpHeight_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+11262E1
+
+"GameAssembly.dll"+11262B6: 48 8B 0D FB 38 26 03     -  mov rcx,[GameAssembly.dll+4389BB8]
+"GameAssembly.dll"+11262BD: F6 81 27 01 00 00 02     -  test byte ptr [rcx+00000127],02
+"GameAssembly.dll"+11262C4: 74 0E                    -  je GameAssembly.dll+11262D4
+"GameAssembly.dll"+11262C6: 83 B9 D8 00 00 00 00     -  cmp dword ptr [rcx+000000D8],00
+"GameAssembly.dll"+11262CD: 75 05                    -  jne GameAssembly.dll+11262D4
+"GameAssembly.dll"+11262CF: E8 2C 78 12 FF           -  call GameAssembly.dll+24DB00
+"GameAssembly.dll"+11262D4: 45 33 C0                 -  xor r8d,r8d
+"GameAssembly.dll"+11262D7: 33 D2                    -  xor edx,edx
+"GameAssembly.dll"+11262D9: 48 8B CF                 -  mov rcx,rdi
+"GameAssembly.dll"+11262DC: E8 1F 84 E0 01           -  call GameAssembly.dll+2F2E700
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+11262E1: F3 0F 11 B3 84 00 00 00  -  movss [rbx+00000084],xmm6
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+11262E9: 48 8B 5C 24 60           -  mov rbx,[rsp+60]
+"GameAssembly.dll"+11262EE: 0F 28 74 24 40           -  movaps xmm6,[rsp+40]
+"GameAssembly.dll"+11262F3: 48 83 C4 50              -  add rsp,50
+"GameAssembly.dll"+11262F7: 5F                       -  pop rdi
+"GameAssembly.dll"+11262F8: C3                       -  ret 
+"GameAssembly.dll"+11262F9: CC                       -  int 3 
+"GameAssembly.dll"+11262FA: CC                       -  int 3 
+"GameAssembly.dll"+11262FB: CC                       -  int 3 
+"GameAssembly.dll"+11262FC: CC                       -  int 3 
+"GameAssembly.dll"+11262FD: CC                       -  int 3 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"floatJumpHeight"</Description>
+          <LastState Value="0" RealAddress="7FFC70E90028"/>
+          <VariableType>Float</VariableType>
+          <Address>floatJumpHeight</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>90</ID>
+      <Description>"锁 试炼时间"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  试炼时间
+}
+[ENABLE]
+aobscanmodule(ShiLianSJ_INJECT,GameAssembly.dll,F3 0F 58 C6 0F 28 CA F3 0F 5C)
+alloc(newmem,$1000,"GameAssembly.dll"+9BDF00)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  // addss xmm0,xmm6
+  nop
+  nop
+  nop
+  nop
+  movaps xmm1,xmm2
+  jmp return
+
+ShiLianSJ_INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(ShiLianSJ_INJECT)
+
+[DISABLE]
+
+ShiLianSJ_INJECT:
+  db F3 0F 58 C6 0F 28 CA
+
+unregistersymbol(ShiLianSJ_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+9BDF00
+
+"GameAssembly.dll"+9BDED3: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+9BDED6: 75 1C                    -  jne GameAssembly.dll+9BDEF4
+"GameAssembly.dll"+9BDED8: 48 8D 0D B9 FC DF 02     -  lea rcx,[GameAssembly.dll+37BDB98]
+"GameAssembly.dll"+9BDEDF: E8 7C 82 8E FF           -  call GameAssembly.dll+2A6160
+"GameAssembly.dll"+9BDEE4: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+9BDEE7: 0F 84 82 00 00 00        -  je GameAssembly.dll+9BDF6F
+"GameAssembly.dll"+9BDEED: 48 89 05 2C 07 A4 03     -  mov [GameAssembly.dll+43FE620],rax
+"GameAssembly.dll"+9BDEF4: 0F 29 7C 24 20           -  movaps [rsp+20],xmm7
+"GameAssembly.dll"+9BDEF9: FF D0                    -  call rax
+"GameAssembly.dll"+9BDEFB: F3 0F 10 53 20           -  movss xmm2,[rbx+20]
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+9BDF00: F3 0F 58 C6              -  addss xmm0,xmm6
+"GameAssembly.dll"+9BDF04: 0F 28 CA                 -  movaps xmm1,xmm2
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+9BDF07: F3 0F 5C 0D 99 7A F0 02  -  subss xmm1,[GameAssembly.dll+38C59A8]
+"GameAssembly.dll"+9BDF0F: F3 0F 11 43 18           -  movss [rbx+18],xmm0
+"GameAssembly.dll"+9BDF14: 0F 2F C1                 -  comiss xmm0,xmm1
+"GameAssembly.dll"+9BDF17: 73 17                    -  jae GameAssembly.dll+9BDF30
+"GameAssembly.dll"+9BDF19: F3 0F 5C 15 27 7B F0 02  -  subss xmm2,[GameAssembly.dll+38C5A48]
+"GameAssembly.dll"+9BDF21: 0F 2F C2                 -  comiss xmm0,xmm2
+"GameAssembly.dll"+9BDF24: 72 39                    -  jb GameAssembly.dll+9BDF5F
+"GameAssembly.dll"+9BDF26: F3 0F 10 35 7E 77 F0 02  -  movss xmm6,[GameAssembly.dll+38C56AC]
+"GameAssembly.dll"+9BDF2E: EB 08                    -  jmp GameAssembly.dll+9BDF38
+"GameAssembly.dll"+9BDF30: F3 0F 10 35 AC 76 F0 02  -  movss xmm6,[GameAssembly.dll+38C55E4]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>94</ID>
+      <Description>"开所有门)开门触发)传送不能使用)有些NPC会消失"</Description>
+      <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <Address/>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>93</ID>
+          <Description>"b"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(bbb_INJECT,GameAssembly.dll,40 88 7B 40 48 8B 0D 0E 37 94 02)
+alloc(newmem,$1000,"GameAssembly.dll"+1A22857)
+
+label(code)
+label(return)
+
+newmem:
+  pushf
+  cmp dil,1
+  je code
+  mov dil,1
+
+code:
+  popf
+  mov [rbx+40],dil
+  mov rcx,[GameAssembly.dll+4365F70]
+  jmp return
+
+bbb_INJECT:
+  jmp newmem
+  nop 6
+return:
+registersymbol(bbb_INJECT)
+
+[DISABLE]
+
+bbb_INJECT:
+  db 40 88 7B 40 48 8B 0D 0E 37 94 02
+
+unregistersymbol(bbb_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+1A22857
+
+"GameAssembly.dll"+1A22833: 90                          -  nop 
+"GameAssembly.dll"+1A22834: 33 C9                       -  xor ecx,ecx
+"GameAssembly.dll"+1A22836: FF 15 8C 76 8C 02           -  call qword ptr [GameAssembly.dll+42E9EC8]
+"GameAssembly.dll"+1A2283C: 90                          -  nop 
+"GameAssembly.dll"+1A2283D: C6 05 8D 00 9D 02 01        -  mov byte ptr [GameAssembly.dll+43F28D1],01
+"GameAssembly.dll"+1A22844: 48 89 73 44                 -  mov [rbx+44],rsi
+"GameAssembly.dll"+1A22848: 45 33 C0                    -  xor r8d,r8d
+"GameAssembly.dll"+1A2284B: 40 0F B6 D7                 -  movzx edx,dil
+"GameAssembly.dll"+1A2284F: 48 8B CB                    -  mov rcx,rbx
+"GameAssembly.dll"+1A22852: E8 A9 D7 FF FF              -  call GameAssembly.dll+1A20000
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+1A22857: 40 88 7B 40                 -  mov [rbx+40],dil
+"GameAssembly.dll"+1A2285B: 48 8B 0D 0E 37 94 02        -  mov rcx,[GameAssembly.dll+4365F70]
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+1A22862: F6 81 27 01 00 00 02        -  test byte ptr [rcx+00000127],02
+"GameAssembly.dll"+1A22869: 74 0E                       -  je GameAssembly.dll+1A22879
+"GameAssembly.dll"+1A2286B: 83 B9 D8 00 00 00 00        -  cmp dword ptr [rcx+000000D8],00
+"GameAssembly.dll"+1A22872: 75 05                       -  jne GameAssembly.dll+1A22879
+"GameAssembly.dll"+1A22874: E8 87 B2 82 FE              -  call GameAssembly.dll+24DB00
+"GameAssembly.dll"+1A22879: 45 33 C0                    -  xor r8d,r8d
+"GameAssembly.dll"+1A2287C: 33 D2                       -  xor edx,edx
+"GameAssembly.dll"+1A2287E: 48 8B CB                    -  mov rcx,rbx
+"GameAssembly.dll"+1A22881: 48 8B 5C 24 50              -  mov rbx,[rsp+50]
+"GameAssembly.dll"+1A22886: 48 8B 74 24 58              -  mov rsi,[rsp+58]
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>124</ID>
+          <Description>"c"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(open_INJECT,GameAssembly.dll,0F B6 0C C1 B0 01)
+alloc(newmem,$1000,"GameAssembly.dll"+2C9E31C)
+
+label(return)
+
+newmem:
+  // movzx ecx,byte ptr [rcx+rax*8]
+  mov ecx,1
+  mov al,01
+  jmp return
+
+open_INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(open_INJECT)
+
+[DISABLE]
+
+open_INJECT:
+  db 0F B6 0C C1 B0 01
+
+unregistersymbol(open_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+2C9E31C
+
+"GameAssembly.dll"+2C9E2FE: C3                       -  ret 
+"GameAssembly.dll"+2C9E2FF: 48 8B 4B 18              -  mov rcx,[rbx+18]
+"GameAssembly.dll"+2C9E303: 48 85 C9                 -  test rcx,rcx
+"GameAssembly.dll"+2C9E306: 74 39                    -  je GameAssembly.dll+2C9E341
+"GameAssembly.dll"+2C9E308: 48 98                    -  cdqe 
+"GameAssembly.dll"+2C9E30A: 3B 41 18                 -  cmp eax,[rcx+18]
+"GameAssembly.dll"+2C9E30D: 73 21                    -  jae GameAssembly.dll+2C9E330
+"GameAssembly.dll"+2C9E30F: 48 8B 5C 24 30           -  mov rbx,[rsp+30]
+"GameAssembly.dll"+2C9E314: 48 8D 04 40              -  lea rax,[rax+rax*2]
+"GameAssembly.dll"+2C9E318: 48 83 C0 06              -  add rax,06
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+2C9E31C: 0F B6 0C C1              -  movzx ecx,byte ptr [rcx+rax*8]
+"GameAssembly.dll"+2C9E320: B0 01                    -  mov al,01
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+2C9E322: 88 0F                    -  mov [rdi],cl
+"GameAssembly.dll"+2C9E324: 48 83 C4 20              -  add rsp,20
+"GameAssembly.dll"+2C9E328: 5F                       -  pop rdi
+"GameAssembly.dll"+2C9E329: C3                       -  ret 
+"GameAssembly.dll"+2C9E32A: E8 61 FD 5C FD           -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+2C9E32F: CC                       -  int 3 
+"GameAssembly.dll"+2C9E330: E8 DB 08 5D FD           -  call GameAssembly.dll+26EC10
+"GameAssembly.dll"+2C9E335: 48 8B C8                 -  mov rcx,rax
+"GameAssembly.dll"+2C9E338: 45 33 C0                 -  xor r8d,r8d
+"GameAssembly.dll"+2C9E33B: E8 D0 FC 5C FD           -  call GameAssembly.dll+26E010
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>105</ID>
+      <Description>"关闭普通机关触发"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// 关闭触发机关
+
+[ENABLE]
+aobscanmodule(JiGuan_INJECT,GameAssembly.dll,FF D0 33 C0 48 83 C4 28 C3 CC CC CC CC 48) // should be unique
+alloc(newmem,$1000,"GameAssembly.dll"+8E713)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  nop
+  nop
+  xor eax,eax
+  add rsp,28
+  jmp return
+
+JiGuan_INJECT:
+  jmp newmem
+  nop 3
+return:
+registersymbol(JiGuan_INJECT)
+
+[DISABLE]
+
+JiGuan_INJECT:
+  db FF D0 33 C0 48 83 C4 28
+
+unregistersymbol(JiGuan_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+8E713
+
+"GameAssembly.dll"+8E6FC: CC                    -  int 3 
+"GameAssembly.dll"+8E6FD: CC                    -  int 3 
+"GameAssembly.dll"+8E6FE: CC                    -  int 3 
+"GameAssembly.dll"+8E6FF: CC                    -  int 3 
+"GameAssembly.dll"+8E700: 48 83 EC 28           -  sub rsp,28
+"GameAssembly.dll"+8E704: 4D 8B D0              -  mov r10,r8
+"GameAssembly.dll"+8E707: 48 8B C1              -  mov rax,rcx
+"GameAssembly.dll"+8E70A: 4C 8B C2              -  mov r8,rdx
+"GameAssembly.dll"+8E70D: 49 8B CA              -  mov rcx,r10
+"GameAssembly.dll"+8E710: 49 8B 11              -  mov rdx,[r9]
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+8E713: FF D0                 -  call rax
+"GameAssembly.dll"+8E715: 33 C0                 -  xor eax,eax
+"GameAssembly.dll"+8E717: 48 83 C4 28           -  add rsp,28
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+8E71B: C3                    -  ret 
+"GameAssembly.dll"+8E71C: CC                    -  int 3 
+"GameAssembly.dll"+8E71D: CC                    -  int 3 
+"GameAssembly.dll"+8E71E: CC                    -  int 3 
+"GameAssembly.dll"+8E71F: CC                    -  int 3 
+"GameAssembly.dll"+8E720: 48 83 EC 28           -  sub rsp,28
+"GameAssembly.dll"+8E724: 4D 8B D0              -  mov r10,r8
+"GameAssembly.dll"+8E727: 48 8B C1              -  mov rax,rcx
+"GameAssembly.dll"+8E72A: 4C 8B C2              -  mov r8,rdx
+"GameAssembly.dll"+8E72D: 49 8B CA              -  mov rcx,r10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>109</ID>
+      <Description>"不往下掉)不稳定"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+7FFC633D8934:
+  db C6 41 12 01
+ 
+[DISABLE]
+7FFC633D8934:
+  db C6 41 12 00
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>118</ID>
+      <Description>"无限跳跃"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <Address/>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>117</ID>
+          <Description>"无限跳跃"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(jump4_INJECT,GameAssembly.dll,F3 0F 10 B3 C0 00 00 00 0F 57 FF)
+alloc(newmem,$1000,"GameAssembly.dll"+8F6E1B)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rbx+000000C0],(float)0.1
+  movss xmm6,[rbx+000000C0]
+  jmp return
+
+jump4_INJECT:
+  jmp newmem
+  nop 3
+return:
+registersymbol(jump4_INJECT)
+
+[DISABLE]
+
+jump4_INJECT:
+  db F3 0F 10 B3 C0 00 00 00
+
+unregistersymbol(jump4_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+8F6E1B
+
+"GameAssembly.dll"+8F6DEC: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+8F6DEF: 75 1C                    -  jne GameAssembly.dll+8F6E0D
+"GameAssembly.dll"+8F6DF1: 48 8D 0D A0 6D EC 02     -  lea rcx,[GameAssembly.dll+37BDB98]
+"GameAssembly.dll"+8F6DF8: E8 63 F3 9A FF           -  call GameAssembly.dll+2A6160
+"GameAssembly.dll"+8F6DFD: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+8F6E00: 0F 84 DB 02 00 00        -  je GameAssembly.dll+8F70E1
+"GameAssembly.dll"+8F6E06: 48 89 05 13 78 B0 03     -  mov [GameAssembly.dll+43FE620],rax
+"GameAssembly.dll"+8F6E0D: FF D0                    -  call rax
+"GameAssembly.dll"+8F6E0F: F3 0F 58 C6              -  addss xmm0,xmm6
+"GameAssembly.dll"+8F6E13: F3 0F 11 83 F0 00 00 00  -  movss [rbx+000000F0],xmm0
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+8F6E1B: F3 0F 10 B3 C0 00 00 00  -  movss xmm6,[rbx+000000C0]
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+8F6E23: 0F 57 FF                 -  xorps xmm7,xmm7
+"GameAssembly.dll"+8F6E26: 0F 2F F7                 -  comiss xmm6,xmm7
+"GameAssembly.dll"+8F6E29: 76 36                    -  jna GameAssembly.dll+8F6E61
+"GameAssembly.dll"+8F6E2B: 48 8B 05 EE 77 B0 03     -  mov rax,[GameAssembly.dll+43FE620]
+"GameAssembly.dll"+8F6E32: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+8F6E35: 75 1C                    -  jne GameAssembly.dll+8F6E53
+"GameAssembly.dll"+8F6E37: 48 8D 0D 5A 6D EC 02     -  lea rcx,[GameAssembly.dll+37BDB98]
+"GameAssembly.dll"+8F6E3E: E8 1D F3 9A FF           -  call GameAssembly.dll+2A6160
+"GameAssembly.dll"+8F6E43: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+8F6E46: 0F 84 AD 02 00 00        -  je GameAssembly.dll+8F70F9
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>87</ID>
+          <Description>"无限跳)双跳触发"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(InfiniteJump_INJECT,GameAssembly.dll,FF 8B 94 00 00 00)
+alloc(newmem,$1000,"GameAssembly.dll"+9699E1)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  // dec [rbx+00000094]
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  jmp return
+
+InfiniteJump_INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(InfiniteJump_INJECT)
+
+[DISABLE]
+
+InfiniteJump_INJECT:
+  db FF 8B 94 00 00 00
+
+unregistersymbol(InfiniteJump_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+9699E1
+
+"GameAssembly.dll"+9699AE: 0F 84 A5 09 00 00        -  je GameAssembly.dll+96A359
+"GameAssembly.dll"+9699B4: 48 8B 80 98 00 00 00     -  mov rax,[rax+00000098]
+"GameAssembly.dll"+9699BB: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+9699BE: 0F 84 8F 09 00 00        -  je GameAssembly.dll+96A353
+"GameAssembly.dll"+9699C4: 48 8B 48 18              -  mov rcx,[rax+18]
+"GameAssembly.dll"+9699C8: 48 85 C9                 -  test rcx,rcx
+"GameAssembly.dll"+9699CB: 0F 84 7C 09 00 00        -  je GameAssembly.dll+96A34D
+"GameAssembly.dll"+9699D1: 45 33 C0                 -  xor r8d,r8d
+"GameAssembly.dll"+9699D4: F3 0F 10 8B 80 00 00 00  -  movss xmm1,[rbx+00000080]
+"GameAssembly.dll"+9699DC: E8 1F C8 7B 00           -  call GameAssembly.dll+1126200
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+9699E1: FF 8B 94 00 00 00        -  dec [rbx+00000094]
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+9699E7: 48 8B 43 58              -  mov rax,[rbx+58]
+"GameAssembly.dll"+9699EB: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+9699EE: 0F 84 53 09 00 00        -  je GameAssembly.dll+96A347
+"GameAssembly.dll"+9699F4: 48 8B 40 30              -  mov rax,[rax+30]
+"GameAssembly.dll"+9699F8: 48 85 C0                 -  test rax,rax
+"GameAssembly.dll"+9699FB: 0F 84 40 09 00 00        -  je GameAssembly.dll+96A341
+"GameAssembly.dll"+969A01: 48 8B 48 50              -  mov rcx,[rax+50]
+"GameAssembly.dll"+969A05: 48 85 C9                 -  test rcx,rcx
+"GameAssembly.dll"+969A08: 0F 84 2D 09 00 00        -  je GameAssembly.dll+96A33B
+"GameAssembly.dll"+969A0E: 48 8B 79 18              -  mov rdi,[rcx+18]
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104</ID>
+          <Description>"无限跳)猫头鹰"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ 后面坐在猫头鹰上，需要开启这个无限跳 }
+[ENABLE]
+aobscanmodule(MTYJump_INJECT,GameAssembly.dll,FF 4B 64 4C 8D 5C 24 70)
+alloc(newmem,$1000,"GameAssembly.dll"+AE4B0B)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  nop
+  nop
+  nop
+  lea r11,[rsp+70]
+  jmp return
+
+MTYJump_INJECT:
+  jmp newmem
+  nop 3
+return:
+registersymbol(MTYJump_INJECT)
+
+[DISABLE]
+
+MTYJump_INJECT:
+  db FF 4B 64 4C 8D 5C 24 70
+
+unregistersymbol(MTYJump_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameAssembly.dll"+AE4B0B
+
+"GameAssembly.dll"+AE4AE6: 4C 8B 43 20                    -  mov r8,[rbx+20]
+"GameAssembly.dll"+AE4AEA: 4D 85 C0                       -  test r8,r8
+"GameAssembly.dll"+AE4AED: 0F 84 83 00 00 00              -  je GameAssembly.dll+AE4B76
+"GameAssembly.dll"+AE4AF3: 48 85 C0                       -  test rax,rax
+"GameAssembly.dll"+AE4AF6: 74 78                          -  je GameAssembly.dll+AE4B70
+"GameAssembly.dll"+AE4AF8: 45 33 C9                       -  xor r9d,r9d
+"GameAssembly.dll"+AE4AFB: 4D 8B 40 78                    -  mov r8,[r8+78]
+"GameAssembly.dll"+AE4AFF: 48 8B 53 58                    -  mov rdx,[rbx+58]
+"GameAssembly.dll"+AE4B03: 48 8B C8                       -  mov rcx,rax
+"GameAssembly.dll"+AE4B06: E8 65 7D CF 01                 -  call GameAssembly.dll+27DC870
+// ---------- INJECTING HERE ----------
+"GameAssembly.dll"+AE4B0B: FF 4B 64                       -  dec [rbx+64]
+"GameAssembly.dll"+AE4B0E: 4C 8D 5C 24 70                 -  lea r11,[rsp+70]
+// ---------- DONE INJECTING  ----------
+"GameAssembly.dll"+AE4B13: 49 8B 5B 28                    -  mov rbx,[r11+28]
+"GameAssembly.dll"+AE4B17: 49 8B 6B 38                    -  mov rbp,[r11+38]
+"GameAssembly.dll"+AE4B1B: 0F 28 74 24 60                 -  movaps xmm6,[rsp+60]
+"GameAssembly.dll"+AE4B20: 49 8B E3                       -  mov rsp,r11
+"GameAssembly.dll"+AE4B23: 41 5E                          -  pop r14
+"GameAssembly.dll"+AE4B25: 5F                             -  pop rdi
+"GameAssembly.dll"+AE4B26: 5E                             -  pop rsi
+"GameAssembly.dll"+AE4B27: C3                             -  ret 
+"GameAssembly.dll"+AE4B28: E8 63 95 78 FF                 -  call GameAssembly.dll+26E090
+"GameAssembly.dll"+AE4B2D: CC                             -  int 3 
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>119</ID>
+      <Description>"无碰撞"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <Address/>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>108</ID>
+          <Description>"无碰撞)单人"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+GameAssembly.dll+CDDBE4:
+  db 90 90 90 90 90
+
+[DISABLE]
+GameAssembly.dll+CDDBE4:
+  db E8 47 8C 42 FF
+
+  {
+  GameAssembly.dll+CDDBE4 - E8 478C42FF           - call GameAssembly.il2cpp_property_get_name+4BA0
+  }
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>107</ID>
+          <Description>"无碰撞)猫头鹰"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// 使用空指令替换碰撞的call
+// GameAssembly.dll+ADFACE - E8 1DF398FF           - call GameAssembly.dll+46EDF0
+
+[ENABLE]
+GameAssembly.dll+ADFACE:
+  db 90 90 90 90 90
+
+[DISABLE]
+GameAssembly.dll+ADFACE:
+  db E8 1D F3 98 FF
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry Color="20000000">
+      <Description>跳跃高度</Description>
+      <AddressString>GameAssembly.dll+11262E1</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>1F</Byte>
+        <Byte>84</Byte>
+        <Byte>E0</Byte>
+        <Byte>01</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>B3</Byte>
+        <Byte>84</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>60</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>hp change</Description>
+      <AddressString>GameAssembly.dll+421987</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>0F</Byte>
+        <Byte>28</Byte>
+        <Byte>F0</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>B3</Byte>
+        <Byte>18</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>BB</Byte>
+        <Byte>1C</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>访问怪物hp</Description>
+      <AddressString>GameAssembly.dll+431CC0</AddressString>
+      <Before>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>41</Byte>
+        <Byte>28</Byte>
+      </Actual>
+      <After>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>攻击怪物hp</Description>
+      <AddressString>GameAssembly.dll+B612E0</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>75</Byte>
+        <Byte>05</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>73</Byte>
+        <Byte>28</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>28</Byte>
+        <Byte>74</Byte>
+        <Byte>24</Byte>
+        <Byte>40</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>访问怪物hp2</Description>
+      <AddressString>GameAssembly.dll+B63FE1</AddressString>
+      <Before>
+        <Byte>4D</Byte>
+        <Byte>F7</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>07</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>4F</Byte>
+        <Byte>28</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>C6</Byte>
+        <Byte>D2</Byte>
+        <Byte>AA</Byte>
+        <Byte>F3</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>访问怪物hp3</Description>
+      <AddressString>GameAssembly.dll+B641FA</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>96</Byte>
+        <Byte>1A</Byte>
+        <Byte>92</Byte>
+        <Byte>FF</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>2F</Byte>
+        <Byte>77</Byte>
+        <Byte>28</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>82</Byte>
+        <Byte>49</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>玩家被攻击</Description>
+      <AddressString>GameAssembly.dll+F142C8</AddressString>
+      <Before>
+        <Byte>EB</Byte>
+        <Byte>03</Byte>
+        <Byte>0F</Byte>
+        <Byte>57</Byte>
+        <Byte>F6</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>73</Byte>
+        <Byte>2C</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>05</Byte>
+        <Byte>94</Byte>
+        <Byte>8E</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>访问mp</Description>
+      <AddressString>GameAssembly.dll+96E915</AddressString>
+      <Before>
+        <Byte>48</Byte>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>21</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>40</Byte>
+        <Byte>18</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>43</Byte>
+        <Byte>34</Byte>
+        <Byte>C6</Byte>
+        <Byte>43</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>改写mp</Description>
+      <AddressString>GameAssembly.dll+96EA4D</AddressString>
+      <Before>
+        <Byte>48</Byte>
+        <Byte>85</Byte>
+        <Byte>DB</Byte>
+        <Byte>74</Byte>
+        <Byte>34</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>73</Byte>
+        <Byte>18</Byte>
+      </Actual>
+      <After>
+        <Byte>33</Byte>
+        <Byte>D2</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>CB</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>消耗氧气</Description>
+      <AddressString>GameAssembly.dll+C93162</AddressString>
+      <Before>
+        <Byte>F3</Byte>
+        <Byte>41</Byte>
+        <Byte>0F</Byte>
+        <Byte>5F</Byte>
+        <Byte>F0</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>B3</Byte>
+        <Byte>64</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>41</Byte>
+        <Byte>0F</Byte>
+        <Byte>2E</Byte>
+        <Byte>F0</Byte>
+        <Byte>0F</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>无限跳跃</Description>
+      <AddressString>GameAssembly.dll+9699E1</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>1F</Byte>
+        <Byte>C8</Byte>
+        <Byte>7B</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>8B</Byte>
+        <Byte>94</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>58</Byte>
+        <Byte>48</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>试炼时间</Description>
+      <AddressString>GameAssembly.dll+9BDF0F</AddressString>
+      <Before>
+        <Byte>0D</Byte>
+        <Byte>99</Byte>
+        <Byte>7A</Byte>
+        <Byte>F0</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>43</Byte>
+        <Byte>18</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>2F</Byte>
+        <Byte>C1</Byte>
+        <Byte>73</Byte>
+        <Byte>17</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>打开石门</Description>
+      <AddressString>GameAssembly.dll+1A22857</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>A9</Byte>
+        <Byte>D7</Byte>
+        <Byte>FF</Byte>
+        <Byte>FF</Byte>
+      </Before>
+      <Actual>
+        <Byte>40</Byte>
+        <Byte>88</Byte>
+        <Byte>7B</Byte>
+        <Byte>40</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>0D</Byte>
+        <Byte>0E</Byte>
+        <Byte>37</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>猫头鹰无限跳</Description>
+      <AddressString>GameAssembly.dll+AE4B0B</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>65</Byte>
+        <Byte>7D</Byte>
+        <Byte>CF</Byte>
+        <Byte>01</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>4B</Byte>
+        <Byte>64</Byte>
+      </Actual>
+      <After>
+        <Byte>4C</Byte>
+        <Byte>8D</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>70</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>碰撞</Description>
+      <AddressString>GameAssembly.dll+CDBDA8</AddressString>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>D7</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>CD</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>43</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>50</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>触发机关</Description>
+      <AddressString>GameAssembly.dll+8E713</AddressString>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>CA</Byte>
+        <Byte>49</Byte>
+        <Byte>8B</Byte>
+        <Byte>11</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>D0</Byte>
+      </Actual>
+      <After>
+        <Byte>33</Byte>
+        <Byte>C0</Byte>
+        <Byte>48</Byte>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>无碰撞，猫头鹰</Description>
+      <AddressString>GameAssembly.dll+ADFACE</AddressString>
+      <Before>
+        <Byte>33</Byte>
+        <Byte>C0</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>D7</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>1D</Byte>
+        <Byte>F3</Byte>
+        <Byte>98</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>无碰撞，单人</Description>
+      <AddressString>GameAssembly.dll+CDDBE4</AddressString>
+      <Before>
+        <Byte>B9</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>47</Byte>
+        <Byte>8C</Byte>
+        <Byte>42</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>BB</Byte>
+        <Byte>A0</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>跳跃动作</Description>
+      <AddressString>GameAssembly.dll+2CF7505</AddressString>
+      <Before>
+        <Byte>48</Byte>
+        <Byte>89</Byte>
+        <Byte>74</Byte>
+        <Byte>F9</Byte>
+        <Byte>20</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>43</Byte>
+        <Byte>18</Byte>
+      </Actual>
+      <After>
+        <Byte>FF</Byte>
+        <Byte>43</Byte>
+        <Byte>1C</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>一级跳，无限跳，==1能跳</Description>
+      <AddressString>GameAssembly.dll+1128931</AddressString>
+      <Before>
+        <Byte>10</Byte>
+        <Byte>0F</Byte>
+        <Byte>B6</Byte>
+        <Byte>41</Byte>
+        <Byte>12</Byte>
+      </Before>
+      <Actual>
+        <Byte>88</Byte>
+        <Byte>41</Byte>
+        <Byte>11</Byte>
+      </Actual>
+      <After>
+        <Byte>C6</Byte>
+        <Byte>41</Byte>
+        <Byte>12</Byte>
+        <Byte>00</Byte>
+        <Byte>48</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>替换了 jae GameAssembly.dll+2C9E330</Description>
+      <AddressString>GameAssembly.dll+2C9E30D</AddressString>
+      <Before>
+        <Byte>48</Byte>
+        <Byte>98</Byte>
+        <Byte>3B</Byte>
+        <Byte>41</Byte>
+        <Byte>18</Byte>
+      </Before>
+      <Actual>
+        <Byte>73</Byte>
+        <Byte>21</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+8E713</Address>
+      <Comment>触发机关
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+431CC0</Address>
+      <Comment>访问怪物hp
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+9699E1</Address>
+      <Comment>无限跳跃 能跳==1 否者==0
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+96E915</Address>
+      <Comment>访问mp
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+96EA4D</Address>
+      <Comment>改写mp
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+9BDF0F</Address>
+      <Comment>试炼时间
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+ADFACE</Address>
+      <Comment>与碰撞，加猫头鹰
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+AE4B0B</Address>
+      <Comment>猫头鹰无限跳
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+B612E0</Address>
+      <Comment>攻击怪物hp
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+B63FE1</Address>
+      <Comment>访问怪物hp2 攻击触发
+
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+B641FA</Address>
+      <Comment>访问怪物hp3 攻击触发
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+C93162</Address>
+      <Comment>消耗氧气
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+CDBDA8</Address>
+      <Comment>碰撞
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+CDDBE4</Address>
+      <Comment>无碰撞，单人
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+F142C8</Address>
+      <Comment>玩家被攻击
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+F7975D</Address>
+      <Comment>1 , 0
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+112892A</Address>
+      <Comment>控制跳跃动画
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+1128931</Address>
+      <Comment>一级跳，无限跳，==1能跳
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"GameAssembly.dll"+1A22857</Address>
+      <Comment>打开石门
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>
